@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
@@ -14,18 +15,18 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.example.web.model.Users;
 import com.example.web.viewresolver.ExcelViewResolver;
 import com.example.web.viewresolver.JsonViewResolver;
 import com.example.web.viewresolver.PdfViewResolver;
+import com.example.web.viewresolver.XmlViewResolver;
 
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.ignoreAcceptHeader(true)
-			.defaultContentType(MediaType.TEXT_HTML)
-			.favorPathExtension(true);
+		configurer.ignoreAcceptHeader(true).defaultContentType(MediaType.TEXT_HTML);
 	}
 
 	@Bean
@@ -34,6 +35,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 		
 		resolvers.add(excelViewResolver());
 		resolvers.add(pdfViewResolver());
+		resolvers.add(xmlViewResolver());
 		resolvers.add(jsonViewResolver());
         resolvers.add(jspViewResolver());
 
@@ -61,6 +63,13 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public ViewResolver pdfViewResolver() {
 		return new PdfViewResolver();
+	}
+	
+	@Bean
+	public ViewResolver xmlViewResolver() {
+		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+		marshaller.setClassesToBeBound(Users.class);
+		return new XmlViewResolver(marshaller);
 	}
 	
 	@Bean

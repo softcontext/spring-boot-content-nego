@@ -20,12 +20,16 @@ public class UserService {
 	CreateRandomDataUtil randomData;
 
 	public List<User> findAllUsers() {
-
 		List<User> users = IntStream.rangeClosed(1, 1).mapToObj(i -> new User(i,
 				randomData.generateRandomChars(candidateChars, 10), 
 				randomData.generateRandomChars(candidateChars, 10)))
 				.collect(Collectors.toList());
 
 		return users;
+	}
+	
+	public User findUser() {
+		return new User(1, randomData.generateRandomChars(candidateChars, 10),
+				randomData.generateRandomChars(candidateChars, 10));
 	}
 }

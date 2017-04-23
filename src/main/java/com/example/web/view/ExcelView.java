@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 
 import com.example.web.model.User;
+import com.example.web.model.Users;
 
 public class ExcelView extends AbstractXlsView {
 
@@ -26,8 +27,8 @@ public class ExcelView extends AbstractXlsView {
 		// change the file name
 		response.setHeader("Content-Disposition", "attachment; filename=\"my-xls-file.xls\"");
 
-		@SuppressWarnings("unchecked")
-		List<User> users = (List<User>) model.get("users");
+		Users data = ((Users)model.get("users-info"));
+		List<User> users = data.getUsers();
 
 		// create excel xls sheet
 		Sheet sheet = workbook.createSheet("User Detail");

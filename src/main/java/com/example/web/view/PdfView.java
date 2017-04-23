@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.web.model.User;
+import com.example.web.model.Users;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
@@ -24,8 +25,8 @@ public class PdfView extends AbstractPdfView {
         // change the file name
         response.setHeader("Content-Disposition", "attachment; filename=\"my-pdf-file.pdf\"");
 
-        @SuppressWarnings("unchecked")
-		List<User> users = (List<User>) model.get("users");
+        Users data = ((Users)model.get("users-info"));
+		List<User> users = data.getUsers();
         document.add(new Paragraph("Generated Users " + LocalDate.now()));
 
         PdfPTable table = new PdfPTable(users.stream().findAny().get().getColumnCount());

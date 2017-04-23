@@ -1,18 +1,22 @@
 package com.example.web.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "id", "name", "company" })
+import lombok.Data;
+
+@Data
+@XmlRootElement(name = "user")
+@XmlType(propOrder = { "id", "name", "company" })
 public class User {
 
 	private int id;
 	private String name;
 	private String company;
 
-	public User() {}
+	public User() {
+	}
 
 	public User(int id, String name, String company) {
 		this.id = id;
@@ -20,31 +24,22 @@ public class User {
 		this.company = company;
 	}
 
-	public int getId() {
-		return id;
-	}
-
+	@XmlElement
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
+	@XmlElement
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getCompany() {
-		return company;
-	}
-
+	@XmlElement
 	public void setCompany(String company) {
 		this.company = company;
 	}
 
 	public int getColumnCount() {
-		return getClass().getDeclaredFields().length;
+		return this.getClass().getDeclaredFields().length;
 	}
 }
