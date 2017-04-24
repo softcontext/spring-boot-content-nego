@@ -24,10 +24,11 @@ public class UserController {
 	 * http://localhost:8080/download.xls
 	 * http://localhost:8080/download.xml
 	 * http://localhost:8080/download.json
+	 * http://localhost:8080/download.csv
 	 */
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
 	public ModelAndView download(HttpServletRequest request) {
-		System.out.println(request.getRequestURL());
+		System.out.println("UserController > "+request.getRequestURL());
 		
 		ModelAndView mav = new ModelAndView("download");
 		mav.addObject("users-info", new Users(userService.findAllUsers()));
